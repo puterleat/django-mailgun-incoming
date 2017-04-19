@@ -55,9 +55,9 @@ class Incoming(View):
             # reverse mapping in content_ids dict
             content_ids = dict(
                 (attnr, cid) for cid, attnr in
-                (email.content_ids or {}).iteritems())
+                (email.content_ids or {}).items())
 
-            for file in request.FILES.values():
+            for file in list(request.FILES.values()):
                 attachment = self.attachment_model(email=email,
                     file=file,
                     content_id=content_ids.get('attachment-{0!s}'.format(i), ''))
@@ -69,7 +69,7 @@ class Incoming(View):
         try:
             self.handle_email(email, attachments=attachments)
             return HttpResponse("OK")
-        except RejectedMailException, e:
+        except RejectedMailException as e:
             return HttpResponse("Email not accepted", status=406)
 
     def handle_email(self, email, attachments=None):

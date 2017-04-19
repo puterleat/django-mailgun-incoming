@@ -22,7 +22,7 @@ class EmailForm(forms.ModelForm):
         if not mailgun_post:
             raise Exception("No mailgun post passed. Unbound form not supported.")
 
-        kwargs['data'] = {self.field_map.get(k, k): v for k, v in mailgun_post.items()}
+        kwargs['data'] = {self.field_map.get(k, k): v for k, v in list(mailgun_post.items())}
         super(EmailForm, self).__init__(*args, **kwargs)
         self.fields['attachment-count'] = forms.IntegerField(required=False)
 

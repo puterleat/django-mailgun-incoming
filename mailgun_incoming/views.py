@@ -77,6 +77,8 @@ class Incoming(View):
             sender=self.email_model, instance=email, attachments=attachments or [])
 
     def verify_signature(self, token, timestamp, signature):
-        return signature == hmac.new(key=self.api_key,
-                                     msg='{0}{1}'.format(timestamp, token),
+        return signature == hmac.new(key=self.api_key.encode('utf8'),
+                                     msg='{0}{1}'.format(timestamp, token).encode('utf8'),
                                      digestmod=hashlib.sha256).hexdigest()
+
+

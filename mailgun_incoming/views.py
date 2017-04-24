@@ -57,7 +57,7 @@ class Incoming(View):
                 (attnr, cid) for cid, attnr in
                 (email.content_ids or {}).items())
 
-            for file in list(request.FILES.values()):
+            for i, file in enumerate(request.FILES.values()):
                 attachment = self.attachment_model(email=email,
                     file=file,
                     content_id=content_ids.get('attachment-{0!s}'.format(i), ''))

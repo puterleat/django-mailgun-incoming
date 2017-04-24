@@ -61,8 +61,7 @@ class Incoming(View):
                 attachment = self.attachment_model(email=email,
                     file=file,
                     content_id=content_ids.get('attachment-{0!s}'.format(i), ''))
-                attachments.save()
-
+                attachment.save()
                 attachments.append(attachment)
 
         # See if any attached signal handlers throw an error
